@@ -13,9 +13,10 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            expression {
-                return env.GIT_BRANCH == "origin/master"
-            }
+            when {
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }}
             steps {
                 script {
                     app = docker.build(DOCKER_IMAGE_NAME)
