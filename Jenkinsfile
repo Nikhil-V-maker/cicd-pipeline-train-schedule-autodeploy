@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'linux-slave'}
+    agent any
     environment {
         //be sure to replace "bhavukm" with your own Docker Hub username
         DOCKER_IMAGE_NAME = "nikhil067/train-schedule"
