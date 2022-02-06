@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'linux-slave'}
     environment {
         //be sure to replace "bhavukm" with your own Docker Hub username
         DOCKER_IMAGE_NAME = "nikhil067/train-schedule"
@@ -28,8 +28,9 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                branch 'master'
-            }
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }}
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
@@ -41,8 +42,9 @@ pipeline {
         }
         stage('CanaryDeploy') {
             when {
-                branch 'master'
-            }
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }}
             environment { 
                 CANARY_REPLICAS = 1
             }
@@ -56,8 +58,9 @@ pipeline {
         }
         stage('DeployToProduction') {
             when {
-                branch 'master'
-            }
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }}
             environment { 
                 CANARY_REPLICAS = 0
             }
