@@ -58,6 +58,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: train-schedule-deployment
-  minReplicas: 0
+  minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 5
